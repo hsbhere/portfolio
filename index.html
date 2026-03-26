@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Haseeb Ahmed | WordPress & AI Automation Specialist</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --bg2: #111111;
+    --bg3: #171717;
+    --card: #141414;
+    --border: rgba(255,255,255,0.07);
+    --accent: #f5a623;
+    --accent2: #e8890a;
+    --text: #e8e8e8;
+    --muted: #666;
+    --muted2: #888;
+    --white: #ffffff;
+    --radius: 16px;
+    --font-head: 'Syne', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ─── NOISE OVERLAY ─── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+    opacity: 0.022;
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 48px;
+    background: rgba(10,10,10,0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    transition: padding 0.3s;
+  }
+  .nav-logo {
+    font-family: var(--font-head);
+    font-weight: 800;
+    font-size: 1.1rem;
+    color: var(--white);
+    letter-spacing: -0.02em;
+  }
+  .nav-logo span { color: var(--accent); }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    color: var(--muted2);
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--white); }
+
+  /* ─── HERO ─── */
+  #hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 120px 48px 80px;
+    position: relative;
+    text-align: center;
+    overflow: hidden;
+  }
+
+  .hero-glow {
+    position: absolute;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(245,166,35,0.12) 0%, transparent 70%);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -60%);
+    pointer-events: none;
+    animation: pulseGlow 6s ease-in-out infinite;
+  }
+
+  @keyframes pulseGlow {
+    0%, 100% { opacity: 0.6; transform: translate(-50%, -60%) scale(1); }
+    50% { opacity: 1; transform: translate(-50%, -60%) scale(1.1); }
+  }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(245,166,35,0.1);
+    border: 1px solid rgba(245,166,35,0.25);
+    border-radius: 50px;
+    padding: 6px 16px;
+    font-size: 0.75rem;
+    color: var(--accent);
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+    animation: fadeUp 0.8s ease both;
+  }
+  .hero-badge::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: blink 1.5s ease-in-out infinite;
+  }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+  h1.hero-name {
+    font-family: var(--font-head);
+    font-size: clamp(3.5rem, 9vw, 7rem);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    color: var(--white);
+    margin-bottom: 16px;
+    animation: fadeUp 0.8s 0.1s ease both;
+  }
+  h1.hero-name .accent-dot { color: var(--accent); }
+
+  .hero-title {
+    font-size: clamp(0.9rem, 2vw, 1.1rem);
+    color: var(--muted2);
+    font-weight: 400;
+    max-width: 560px;
+    margin: 0 auto 40px;
+    animation: fadeUp 0.8s 0.2s ease both;
+  }
+
+  .hero-tags {
+    display: flex; flex-wrap: wrap; gap: 10px;
+    justify-content: center;
+    margin-bottom: 48px;
+    animation: fadeUp 0.8s 0.3s ease both;
+  }
+  .hero-tag {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 50px;
+    padding: 8px 18px;
+    font-size: 0.8rem;
+    color: var(--muted2);
+    font-weight: 500;
+    transition: all 0.25s;
+  }
+  .hero-tag:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(245,166,35,0.05);
+  }
+
+  .hero-cta {
+    display: flex; gap: 14px; justify-content: center;
+    animation: fadeUp 0.8s 0.4s ease both;
+  }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 14px 28px;
+    border-radius: 10px;
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.25s;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: #0a0a0a;
+    border: 1px solid var(--accent);
+  }
+  .btn-primary:hover {
+    background: var(--accent2);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(245,166,35,0.3);
+  }
+  .btn-outline {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+  .btn-outline:hover {
+    border-color: rgba(255,255,255,0.25);
+    background: var(--bg3);
+    transform: translateY(-2px);
+  }
+
+  .scroll-indicator {
+    position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    color: var(--muted);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    animation: fadeUp 1s 0.8s ease both;
+  }
+  .scroll-line {
+    width: 1px; height: 40px;
+    background: linear-gradient(to bottom, var(--accent), transparent);
+    animation: scrollAnim 2s ease-in-out infinite;
+  }
+  @keyframes scrollAnim {
+    0%,100%{ transform: scaleY(1); opacity:1; }
+    50%{ transform: scaleY(0.5); opacity:0.5; }
+  }
+
+  @keyframes fadeUp {
+    from { opacity:0; transform: translateY(24px); }
+    to { opacity:1; transform: translateY(0); }
+  }
+
+  /* ─── SECTIONS ─── */
+  section { padding: 100px 48px; max-width: 1100px; margin: 0 auto; }
+  .section-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+  .section-title {
+    font-family: var(--font-head);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    color: var(--white);
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    margin-bottom: 48px;
+  }
+
+  /* ─── ABOUT ─── */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+  .about-text p {
+    color: var(--muted2);
+    font-size: 1rem;
+    line-height: 1.8;
+    margin-bottom: 16px;
+  }
+  .about-text p strong { color: var(--text); }
+  .about-traits {
+    display: flex; flex-direction: column; gap: 12px;
+    padding-top: 8px;
+  }
+  .trait {
+    display: flex; align-items: center; gap: 14px;
+    padding: 14px 18px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    transition: all 0.25s;
+  }
+  .trait:hover {
+    border-color: rgba(245,166,35,0.3);
+    transform: translateX(6px);
+  }
+  .trait-icon {
+    width: 36px; height: 36px;
+    background: rgba(245,166,35,0.1);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+  .trait-text { font-size: 0.875rem; color: var(--text); font-weight: 500; }
+  .trait-sub { font-size: 0.75rem; color: var(--muted); margin-top: 1px; }
+
+  /* ─── EXPERTISE ─── */
+  #expertise { background: var(--bg); }
+  .expertise-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .expertise-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px 24px;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .expertise-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .expertise-card:hover::before { opacity: 1; }
+  .expertise-card:hover {
+    border-color: rgba(245,166,35,0.2);
+    transform: translateY(-4px);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.4);
+  }
+  .expertise-icon {
+    font-size: 2rem;
+    margin-bottom: 16px;
+  }
+  .expertise-title {
+    font-family: var(--font-head);
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 10px;
+  }
+  .expertise-desc {
+    font-size: 0.85rem;
+    color: var(--muted2);
+    line-height: 1.7;
+  }
+
+  /* ─── SKILLS ─── */
+  .skills-container {
+    display: flex; flex-direction: column; gap: 32px;
+  }
+  .skill-group-title {
+    font-family: var(--font-head);
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .skill-pills {
+    display: flex; flex-wrap: wrap; gap: 10px;
+  }
+  .skill-pill {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-size: 0.85rem;
+    color: var(--text);
+    font-weight: 500;
+    transition: all 0.2s;
+  }
+  .skill-pill:hover {
+    background: rgba(245,166,35,0.08);
+    border-color: rgba(245,166,35,0.35);
+    color: var(--accent);
+  }
+
+  /* ─── DRAGGABLE CARDS ─── */
+  .drag-hint {
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin-bottom: 20px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .drag-hint svg { opacity: 0.5; }
+
+  .cards-track-wrapper {
+    overflow: hidden;
+    cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
+    border-radius: var(--radius);
+    margin: 0 -48px;
+    padding: 0 48px;
+  }
+  .cards-track-wrapper:active { cursor: grabbing; }
+  .cards-track {
+    display: flex;
+    gap: 20px;
+    width: max-content;
+    padding-bottom: 16px;
+  }
+
+  .exp-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px 26px;
+    min-width: 360px;
+    max-width: 360px;
+    transition: border-color 0.25s, box-shadow 0.25s;
+    pointer-events: none;
+  }
+  .cards-track-wrapper:not(:active) .exp-card {
+    pointer-events: auto;
+  }
+  .exp-card:hover {
+    border-color: rgba(245,166,35,0.2);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  }
+  .exp-company {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .exp-role {
+    font-family: var(--font-head);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 6px;
+  }
+  .exp-meta {
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-bottom: 16px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .exp-meta span { color: var(--muted2); }
+  .exp-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--muted); flex-shrink: 0; }
+  .exp-bullets {
+    list-style: none;
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .exp-bullets li {
+    font-size: 0.855rem;
+    color: var(--muted2);
+    line-height: 1.6;
+    padding-left: 14px;
+    position: relative;
+  }
+  .exp-bullets li::before {
+    content: '';
+    position: absolute; left: 0; top: 9px;
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+  .exp-bullets li strong { color: var(--text); }
+
+  /* project cards same drag style */
+  .proj-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px 26px;
+    min-width: 340px;
+    max-width: 340px;
+    display: flex; flex-direction: column;
+    gap: 12px;
+    transition: border-color 0.25s, box-shadow 0.25s;
+  }
+  .proj-card:hover {
+    border-color: rgba(245,166,35,0.25);
+    box-shadow: 0 8px 40px rgba(0,0,0,0.4);
+  }
+  .proj-emoji { font-size: 2rem; }
+  .proj-title {
+    font-family: var(--font-head);
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--white);
+  }
+  .proj-subtitle {
+    font-size: 0.78rem;
+    color: var(--accent);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .proj-desc {
+    font-size: 0.845rem;
+    color: var(--muted2);
+    line-height: 1.7;
+    flex: 1;
+  }
+  .proj-tags {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    margin-top: 4px;
+  }
+  .proj-tag {
+    background: rgba(245,166,35,0.08);
+    border: 1px solid rgba(245,166,35,0.18);
+    border-radius: 6px;
+    padding: 3px 10px;
+    font-size: 0.75rem;
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  /* ─── EDUCATION ─── */
+  .edu-cards { display: flex; flex-direction: column; gap: 16px; }
+  .edu-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 26px 28px;
+    display: flex; align-items: flex-start; gap: 20px;
+    transition: all 0.25s;
+  }
+  .edu-card:hover {
+    border-color: rgba(245,166,35,0.2);
+    transform: translateX(4px);
+  }
+  .edu-icon {
+    width: 48px; height: 48px; flex-shrink: 0;
+    background: rgba(245,166,35,0.1);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem;
+  }
+  .edu-school {
+    font-family: var(--font-head);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 4px;
+  }
+  .edu-degree {
+    font-size: 0.875rem;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+  .edu-years { font-size: 0.8rem; color: var(--muted); }
+
+  /* ─── FOOTER ─── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 60px 48px;
+    text-align: center;
+  }
+  footer h2 {
+    font-family: var(--font-head);
+    font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+    font-weight: 800;
+    color: var(--white);
+    letter-spacing: -0.03em;
+    margin-bottom: 12px;
+  }
+  footer p { color: var(--muted2); font-size: 0.95rem; margin-bottom: 32px; }
+  .footer-links {
+    display: flex; gap: 20px; justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 48px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+  }
+  .footer-links a {
+    color: var(--muted);
+    font-size: 0.8rem;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--accent); }
+  .footer-copy {
+    color: var(--muted);
+    font-size: 0.78rem;
+    margin-top: 24px;
+  }
+
+  /* ─── SCROLL ANIMATIONS ─── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 768px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    section { padding: 70px 24px; }
+    #hero { padding: 100px 24px 60px; }
+    .about-grid { grid-template-columns: 1fr; gap: 40px; }
+    .expertise-grid { grid-template-columns: 1fr; }
+    footer { padding: 48px 24px; }
+    .cards-track-wrapper { margin: 0 -24px; padding: 0 24px; }
+    h1.hero-name { font-size: 3.2rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">H<span>.</span>Ahmed</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#expertise">Expertise</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Work</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-badge">Available for Work</div>
+  <h1 class="hero-name">HASEEB<br>AHMED<span class="accent-dot">.</span></h1>
+  <p class="hero-title">WordPress Specialist &amp; AI Automation Engineer building smart digital systems in Karachi.</p>
+  <div class="hero-tags">
+    <span class="hero-tag">⚡ WordPress Expert</span>
+    <span class="hero-tag">🤖 AI Automation</span>
+    <span class="hero-tag">🌐 Web Development</span>
+    <span class="hero-tag">📍 Karachi, PK</span>
+    <span class="hero-tag">🔌 Process Optimization</span>
+  </div>
+  <div class="hero-cta">
+    <a href="mailto:haseeb@email.com" class="btn btn-primary">Hire Me →</a>
+    <a href="#about" class="btn btn-outline">Explore Work</a>
+  </div>
+  <div class="scroll-indicator">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-label">Who I Am</div>
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <h2 class="section-title">Turning ideas into<br><em style="color:var(--accent);font-style:normal;">smart systems.</em></h2>
+      <p>I am an experienced <strong>WordPress Developer</strong> with a strong track record of building high-quality, responsive, and performance-optimized websites for diverse clients — custom themes, plugins, UX improvements, and speed optimization tailored to business needs.</p>
+      <p>Alongside WordPress, I specialize in <strong>AI-based automation bots</strong> — helping businesses streamline processes, reduce manual workload, and improve operational efficiency. I design smart, scalable systems that integrate seamlessly with existing workflows.</p>
+      <p>With hands-on experience across multiple projects, I focus on <strong>clean development practices</strong>, problem-solving, and continuous improvement — always exploring new technologies to create impactful digital solutions.</p>
+    </div>
+    <div class="about-traits reveal">
+      <div class="trait"><div class="trait-icon">🎯</div><div><div class="trait-text">Precision Driven</div><div class="trait-sub">Clean code, zero shortcuts</div></div></div>
+      <div class="trait"><div class="trait-icon">🤖</div><div><div class="trait-text">AI-First Mindset</div><div class="trait-sub">Automation before repetition</div></div></div>
+      <div class="trait"><div class="trait-icon">🌐</div><div><div class="trait-text">Remote Ready</div><div class="trait-sub">Async-friendly, globally available</div></div></div>
+      <div class="trait"><div class="trait-icon">📈</div><div><div class="trait-text">Impact Focused</div><div class="trait-sub">Every feature has a business case</div></div></div>
+      <div class="trait"><div class="trait-icon">🔁</div><div><div class="trait-text">Continuous Learner</div><div class="trait-sub">Always upskilling, never settling</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERTISE -->
+<section id="expertise">
+  <div class="section-label">What I Do</div>
+  <h2 class="section-title reveal">Areas of<br>Expertise.</h2>
+  <div class="expertise-grid reveal">
+    <div class="expertise-card">
+      <div class="expertise-icon">🔧</div>
+      <div class="expertise-title">WordPress Development</div>
+      <div class="expertise-desc">Custom themes and plugins from scratch, WooCommerce stores, Elementor builds, performance optimization, SEO tweaks, and everything in between — pixel-perfect and lightning-fast.</div>
+    </div>
+    <div class="expertise-card">
+      <div class="expertise-icon">🤖</div>
+      <div class="expertise-title">AI Automation Bots</div>
+      <div class="expertise-desc">Building intelligent bots and automation pipelines that replace repetitive tasks, integrate with third-party platforms, and help businesses operate smarter without hiring more heads.</div>
+    </div>
+    <div class="expertise-card">
+      <div class="expertise-icon">🌐</div>
+      <div class="expertise-title">Web Design & UX</div>
+      <div class="expertise-desc">Designing responsive, user-centric web interfaces with a focus on conversion, clarity, and cross-device compatibility — making sure every click feels intentional.</div>
+    </div>
+    <div class="expertise-card">
+      <div class="expertise-icon">⚙️</div>
+      <div class="expertise-title">Process Optimization</div>
+      <div class="expertise-desc">Auditing existing workflows and replacing manual bottlenecks with automated, scalable systems — from data extraction pipelines to multi-step business logic automation.</div>
+    </div>
+    <div class="expertise-card">
+      <div class="expertise-icon">🧪</div>
+      <div class="expertise-title">Software Testing & QA</div>
+      <div class="expertise-desc">End-to-end testing strategies to ensure nothing ships broken — functional testing, regression checks, and quality assurance across web applications and backend services.</div>
+    </div>
+    <div class="expertise-card">
+      <div class="expertise-icon">💡</div>
+      <div class="expertise-title">IT Consulting</div>
+      <div class="expertise-desc">Advising businesses on digital transformation strategies, stack selection, automation opportunities, and how to bridge the gap between technical capability and business goals.</div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-label">Technical Arsenal</div>
+  <h2 class="section-title reveal">Built With<br>These.</h2>
+  <div class="skills-container reveal">
+    <div>
+      <div class="skill-group-title">Languages & Web</div>
+      <div class="skill-pills">
+        <span class="skill-pill">PHP</span>
+        <span class="skill-pill">JavaScript</span>
+        <span class="skill-pill">HTML5</span>
+        <span class="skill-pill">CSS3</span>
+        <span class="skill-pill">SQL</span>
+        <span class="skill-pill">Python</span>
+      </div>
+    </div>
+    <div>
+      <div class="skill-group-title">WordPress & CMS</div>
+      <div class="skill-pills">
+        <span class="skill-pill">WordPress</span>
+        <span class="skill-pill">WooCommerce</span>
+        <span class="skill-pill">Elementor</span>
+        <span class="skill-pill">ACF</span>
+        <span class="skill-pill">Custom Themes</span>
+        <span class="skill-pill">Custom Plugins</span>
+        <span class="skill-pill">REST API</span>
+      </div>
+    </div>
+    <div>
+      <div class="skill-group-title">AI & Automation</div>
+      <div class="skill-pills">
+        <span class="skill-pill">OpenAI API</span>
+        <span class="skill-pill">Claude Code</span>
+        <span class="skill-pill">OpenCLAW CLI</span>
+        <span class="skill-pill">AI Bots</span>
+        <span class="skill-pill">Workflow Automation</span>
+        <span class="skill-pill">Web Scraping</span>
+      </div>
+    </div>
+    <div>
+      <div class="skill-group-title">Tools & Platforms</div>
+      <div class="skill-pills">
+        <span class="skill-pill">Git & GitHub</span>
+        <span class="skill-pill">Figma</span>
+        <span class="skill-pill">cPanel</span>
+        <span class="skill-pill">MySQL</span>
+        <span class="skill-pill">Postman</span>
+        <span class="skill-pill">VS Code</span>
+        <span class="skill-pill">SEO Tools</span>
+        <span class="skill-pill">Linux CLI</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-label">Work History</div>
+  <h2 class="section-title reveal">Where I've<br>Worked.</h2>
+  <div class="drag-hint reveal">
+    <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"/></svg>
+    Drag to explore
+  </div>
+  <div class="cards-track-wrapper" id="expTrack">
+    <div class="cards-track">
+
+      <div class="exp-card">
+        <div class="exp-company">Indulead – Training &amp; Conferences</div>
+        <div class="exp-role">IT Analyst</div>
+        <div class="exp-meta">
+          <span>May 2025 – Present</span>
+          <div class="exp-dot"></div>
+          <span>Karachi · On-site</span>
+        </div>
+        <ul class="exp-bullets">
+          <li>Managing and optimizing IT systems and internal digital infrastructure for training operations.</li>
+          <li>Implementing automation solutions to streamline conference and event management workflows.</li>
+          <li>Providing technical consulting and support across departments to improve digital efficiency.</li>
+          <li>Evaluating and integrating new tools to improve operational processes.</li>
+        </ul>
+      </div>
+
+      <div class="exp-card">
+        <div class="exp-company">Freelance &amp; Personal Projects</div>
+        <div class="exp-role">WordPress Developer &amp; Automation Engineer</div>
+        <div class="exp-meta">
+          <span>2022 – Present</span>
+          <div class="exp-dot"></div>
+          <span>Remote</span>
+        </div>
+        <ul class="exp-bullets">
+          <li>Designed and delivered custom WordPress websites — themes, plugins, WooCommerce stores — for diverse clients.</li>
+          <li>Built <strong>AI automation bots</strong> for business clients to replace repetitive workflows and reduce manual overhead.</li>
+          <li>Conducted performance audits and applied speed/SEO optimizations achieving measurable improvements.</li>
+          <li>Provided ongoing IT consulting and technical support to SMEs across multiple industries.</li>
+        </ul>
+      </div>
+
+      <div class="exp-card">
+        <div class="exp-company">Academic Projects – SSUET</div>
+        <div class="exp-role">Software Engineering Student</div>
+        <div class="exp-meta">
+          <span>Oct 2021 – Aug 2025</span>
+          <div class="exp-dot"></div>
+          <span>Karachi</span>
+        </div>
+        <ul class="exp-bullets">
+          <li>Worked across multiple team-based projects covering web development, databases, and software architecture.</li>
+          <li>Applied core SE principles: OOP, data structures, algorithms, and software design patterns.</li>
+          <li>Built full-stack applications and participated in university-level competitions and showcases.</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-label">What I've Built</div>
+  <h2 class="section-title reveal">Selected<br>Projects.</h2>
+  <div class="drag-hint reveal">
+    <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"/></svg>
+    Drag to explore
+  </div>
+  <div class="cards-track-wrapper" id="projTrack">
+    <div class="cards-track">
+
+      <div class="proj-card">
+        <div class="proj-emoji">🛒</div>
+        <div class="proj-subtitle">E-Commerce Platform</div>
+        <div class="proj-title">WooCommerce Custom Store</div>
+        <div class="proj-desc">Built a fully customized WooCommerce store with a bespoke theme, advanced product filtering, custom checkout flow, and payment gateway integration — performance-optimized to load under 2 seconds.</div>
+        <div class="proj-tags">
+          <span class="proj-tag">WordPress</span>
+          <span class="proj-tag">WooCommerce</span>
+          <span class="proj-tag">PHP</span>
+          <span class="proj-tag">CSS</span>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-emoji">🤖</div>
+        <div class="proj-subtitle">AI Automation Bot</div>
+        <div class="proj-title">Business Process Automation System</div>
+        <div class="proj-desc">Designed an AI-powered automation bot for a business client to handle lead capture, data entry, follow-up emails, and CRM updates — reducing manual effort by over 70% and cutting response time significantly.</div>
+        <div class="proj-tags">
+          <span class="proj-tag">Python</span>
+          <span class="proj-tag">OpenAI API</span>
+          <span class="proj-tag">n8n</span>
+          <span class="proj-tag">Automation</span>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-emoji">🏢</div>
+        <div class="proj-subtitle">Corporate Web Presence</div>
+        <div class="proj-title">Multi-Page Business Website</div>
+        <div class="proj-desc">Developed a professional multi-page corporate site using WordPress and Elementor with custom animations, contact forms, service pages, and SEO optimization — delivering strong organic visibility from day one.</div>
+        <div class="proj-tags">
+          <span class="proj-tag">WordPress</span>
+          <span class="proj-tag">Elementor</span>
+          <span class="proj-tag">SEO</span>
+          <span class="proj-tag">JavaScript</span>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-emoji">📊</div>
+        <div class="proj-subtitle">Data Automation</div>
+        <div class="proj-title">Web Scraping &amp; Data Pipeline</div>
+        <div class="proj-desc">Built a robust web scraping and data processing pipeline to automatically extract, clean, and structure business data — integrated with a simple dashboard for non-technical stakeholders to review outputs.</div>
+        <div class="proj-tags">
+          <span class="proj-tag">Python</span>
+          <span class="proj-tag">SQL</span>
+          <span class="proj-tag">Automation</span>
+          <span class="proj-tag">REST API</span>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-emoji">🔌</div>
+        <div class="proj-subtitle">WordPress Plugin</div>
+        <div class="proj-title">Custom WordPress Plugin</div>
+        <div class="proj-desc">Developed a custom WordPress plugin for a client's specific business logic — adding unique post types, admin panels, shortcodes, and frontend components not achievable through off-the-shelf solutions.</div>
+        <div class="proj-tags">
+          <span class="proj-tag">PHP</span>
+          <span class="proj-tag">WordPress API</span>
+          <span class="proj-tag">JavaScript</span>
+          <span class="proj-tag">MySQL</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="section-label">Academic Background</div>
+  <h2 class="section-title reveal">Education.</h2>
+  <div class="edu-cards reveal">
+    <div class="edu-card">
+      <div class="edu-icon">🎓</div>
+      <div>
+        <div class="edu-school">Sir Syed University of Engineering &amp; Technology</div>
+        <div class="edu-degree">Bachelor of Science in Software Engineering</div>
+        <div class="edu-years">October 2021 – August 2025</div>
+        <p style="font-size:0.85rem;color:var(--muted2);margin-top:10px;line-height:1.7;">Four years of building, breaking, debugging, and learning under pressure. Covered the full spectrum of software engineering — from data structures and algorithms to system design, databases, and real-world team projects. Left with technical skills, a thick skin, and a much healthier relationship with semicolons.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT / FOOTER -->
+<footer id="contact">
+  <h2>Let's Build<br>Something <span style="color:var(--accent)">Together.</span></h2>
+  <p>Open to freelance projects, full-time roles, and interesting collaborations.</p>
+  <a href="mailto:haseeb@email.com" class="btn btn-primary" style="display:inline-flex;">Get In Touch →</a>
+  <div class="footer-links">
+    <a href="#hero">Home</a>
+    <a href="#about">About</a>
+    <a href="#expertise">Expertise</a>
+    <a href="#skills">Skills</a>
+    <a href="#experience">Work</a>
+    <a href="#projects">Projects</a>
+    <a href="#education">Education</a>
+    <a href="https://www.linkedin.com/in/haseeb-ahmed-087283388/" target="_blank">LinkedIn</a>
+  </div>
+  <div class="footer-copy">© 2025 Haseeb Ahmed · Built with craft &amp; caffeine · Karachi, Pakistan</div>
+</footer>
+
+<script>
+  // ── Scroll reveal ──
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // ── Draggable tracks ──
+  function makeDraggable(wrapperId) {
+    const wrapper = document.getElementById(wrapperId);
+    if (!wrapper) return;
+    const track = wrapper.querySelector('.cards-track');
+    let isDragging = false, startX = 0, scrollLeft = 0;
+
+    wrapper.addEventListener('mousedown', e => {
+      isDragging = true;
+      startX = e.pageX - wrapper.offsetLeft;
+      scrollLeft = wrapper.scrollLeft;
+      wrapper.style.cursor = 'grabbing';
+    });
+    window.addEventListener('mouseup', () => {
+      isDragging = false;
+      wrapper.style.cursor = 'grab';
+    });
+    wrapper.addEventListener('mousemove', e => {
+      if (!isDragging) return;
+      e.preventDefault();
+      const x = e.pageX - wrapper.offsetLeft;
+      const walk = (x - startX) * 1.5;
+      wrapper.scrollLeft = scrollLeft - walk;
+    });
+
+    // Touch support
+    wrapper.addEventListener('touchstart', e => {
+      startX = e.touches[0].pageX - wrapper.offsetLeft;
+      scrollLeft = wrapper.scrollLeft;
+    }, { passive: true });
+    wrapper.addEventListener('touchmove', e => {
+      const x = e.touches[0].pageX - wrapper.offsetLeft;
+      wrapper.scrollLeft = scrollLeft - (x - startX) * 1.2;
+    }, { passive: true });
+  }
+
+  makeDraggable('expTrack');
+  makeDraggable('projTrack');
+
+  // ── Nav shrink on scroll ──
+  window.addEventListener('scroll', () => {
+    const nav = document.querySelector('nav');
+    nav.style.padding = window.scrollY > 50 ? '12px 48px' : '20px 48px';
+  });
+</script>
+</body>
+</html>
